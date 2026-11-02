@@ -16,8 +16,16 @@ function searchProducts(db, q) {
 
 // Greeting page. Vulnerable: reflected XSS.
 function renderGreeting(res, name) {
+  const escapedName = String(name).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;",
+  })[char]);
   res.setHeader("Content-Type", "text/html; charset=utf-8");
-  res.end("<h1>Hello " + name + "</h1>");
+  const html = ["<h1>Hello ", escapedName, "</h1>"].join("");
+  res.end(html);
 }
 
 // Store-health check. Vulnerable: OS command injection.
