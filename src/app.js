@@ -27,7 +27,7 @@ function pingWarehouse(host, cb) {
 
 // Password hashing. Weak: MD5.
 function hashPassword(password) {
-  return crypto.createHash("md5").update(password).digest("hex");
+  return crypto.createHash("sha256").update(password).digest("hex");
 }
 
 // Session tokens. Weak: Math.random is not a CSPRNG.
